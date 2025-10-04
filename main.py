@@ -2,6 +2,7 @@ from imap_client import IMAPClient
 from classifier import Classifier
 from router import Router
 import config
+import time
 
 def main():
     imap_client = IMAPClient(config.IMAP_HOST, config.IMAP_USER, config.IMAP_PASS)
@@ -20,4 +21,6 @@ def main():
         router.route(e_id, label)
 
 if __name__ == "__main__":
-    main()
+    while True:
+        main()
+        time.sleep(60)
