@@ -30,6 +30,11 @@ class IMAPClient:
 
     def move_email(self, e_id, folder):
         result, _ = self.mail.copy(e_id, folder)
-        if result == "OK":
-            self.mail.store(e_id, "+FLAGS", "\\Deleted")
-            self.mail.expunge()
+        if result != "OK":
+            print(f"Failed to copy email {e_id} to {folder}")
+            return
+
+        self.mail.store(e_id, '+FLAGS', '\\Deleted')
+
+        self.mail.expunge()
+        print(f"Email {e_id} moved to {folder} successfully.")
