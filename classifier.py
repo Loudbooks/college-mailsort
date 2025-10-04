@@ -22,8 +22,6 @@ Body: {body[:500]}
             stream=False
         )
         
-        print(f"Classifier raw response: {response.text}")
-        
         output = ""
         if response.status_code == 200:
             output = response.json().get("response", "")
@@ -31,7 +29,5 @@ Body: {body[:500]}
             output = re.sub(r"<think>.*?</think>", "", output, flags=re.DOTALL).strip()
         else:
             output = "Anything Else"
-
-        print(f"Classifier response: {output}")
         
         return output

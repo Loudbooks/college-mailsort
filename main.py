@@ -14,8 +14,6 @@ def main():
         label = classifier.classify(subject, body)
         
         if label not in config.FOLDERS:
-            
-            print(f"Unknown label '{label}' for email ID {e_id}. Skipping routing.")
             continue
         
         router.route(e_id, label)
