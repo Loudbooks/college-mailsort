@@ -10,13 +10,13 @@ def main():
     router = Router(imap_client)
 
     messages = imap_client.fetch_unseen()
-    for e_id, subject, from_, body in messages:
+    for uid, subject, from_, body in messages:
         label = classifier.classify(subject, body)
         
         if label not in config.FOLDERS:
             continue
         
-        router.route(e_id, label)
+        router.route(uid, label)
 
 if __name__ == "__main__":
     while True:

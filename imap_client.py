@@ -24,17 +24,26 @@ class IMAPClient:
                         break
             else:
                 body = msg.get_payload(decode=True).decode(errors="ignore")
-            messages.append((e_id, subject, from_, body))
+                
+            status, uid_data = self.mail.fetch(e_id, "(UID)")
+            if status != "OK":
+                continue
+            uid = uid_data[0].decode().split("UID ")[1].split()[0].strip(")")
+            print(f"Fetched email UID: {uid}, Subject: {subject}")
+
+            messages.append((uid, subject, from_, body))
         
         return messages
 
-    def move_email(self, e_id, folder):
-        result, _ = self.mail.copy(e_id, folder)
+    def move_email(self, uid, folder):
+        self.mail.select("inbox")
+
+        result, _ = self.mail.uid('COPY', uid, folder)
         if result != "OK":
-            print(f"Failed to copy email {e_id} to {folder}")
+            print(f"Failed to copy email UID {uid} to {folder}")
             return
 
-        self.mail.store(e_id, '+FLAGS', '\\Deleted')
-
+        self.mail.uid('STORE', uid, '+FLAGS', '\\Deleted')
         self.mail.expunge()
-        print(f"Email {e_id} moved to {folder} successfully.")
+
+        print(f"Email UID {uid} moved to {folder} successfully.")
