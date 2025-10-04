@@ -9,7 +9,20 @@ class Classifier:
 
     def classify(self, subject, body):
         prompt = f"""
-Classify this email into either College Advertising or Anything Else. Only respond with one of those two categories and nothing else. Decide if the email is marketable college advertising content or not. If it is, respond with "College Advertising". If it is not, respond with "Anything Else". Do not respond with anything else. Do not explain your reasoning. Do not use any punctuation. Do not use any other words. Only respond with one of those two categories and nothing else. When I say college I mean universities, colleges, community colleges, trade schools, and other post-secondary educational institutions.
+Classify this email into either College Advertising or Anything Else.
+Only respond with one of those two categories and nothing else. 
+Decide if the email is marketable college advertising content or not. 
+If it is, respond with "College Advertising". 
+If it is not, respond with "Anything Else". 
+Do not respond with anything else.
+Do not explain your reasoning. 
+Do not use any punctuation. 
+Do not use any other words. 
+Only respond with one of those two categories and nothing else. 
+When I say college I mean universities, colleges, community colleges, trade schools, and other post-secondary educational institutions. 
+Results for an application to that college should be classified as Anything Else. 
+Anything regarding my application should be classified as Anything Else. 
+Anything you deem to be important and not marketing should be classified as Anything Else.
 
 Subject: {subject}
 Body: {body[:500]}
