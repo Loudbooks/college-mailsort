@@ -21,8 +21,7 @@ Do not use any other words.
 Only respond with one of those two categories and nothing else. 
 When I say college I mean universities, colleges, community colleges, trade schools, and other post-secondary educational institutions. 
 Results for an application to that college should be classified as Anything Else. 
-Anything regarding my application should be classified as Anything Else. 
-Anything you deem to be important and not marketing should be classified as Anything Else.
+Anything regarding my active, already submitted application should be classified as Anything Else.
 
 Subject: {subject}
 Body: {body[:500]}
