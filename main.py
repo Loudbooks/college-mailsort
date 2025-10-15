@@ -8,22 +8,24 @@ def main():
     imap_client = IMAPClient(config.IMAP_HOST, config.IMAP_USER, config.IMAP_PASS)
     classifier = Classifier()
     router = Router(imap_client)
-
-    messages = imap_client.fetch_unseen()
-    for uid, subject, from_, body in messages:
-        label = classifier.classify(subject, body)
-        
-        if label is None:
-            print(f"Classification failed for email UID: {uid}. Skipping.")
-            continue
-        
-        if label not in config.FOLDERS:
-            continue
-        
+    
+    print("Email service started. Checking for new emails every 60 seconds.")
+    
+    while True:
+        messages = imap_client.fetch_unseen()
+        for uid, subject, from_, body in messages:
+            label = classifier.classify(subject, body)
+            
+            if label is None:
+                print(f"Classification failed for email UID: {uid}. Skipping.")
+                continue
+            
+            if label not in config.FOLDERS:
+                continue
+            
         router.route(uid, label)
+        
+        time.sleep(60)
 
 if __name__ == "__main__":
-    print("Email service started. Checking for new emails every 60 seconds.")
-    while True:
-        main()
-        time.sleep(60)
+    main()
