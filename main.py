@@ -23,7 +23,7 @@ def main():
             if label not in config.FOLDERS:
                 continue
             
-        router.route(uid, label)
+            router.route(uid, label)
         
         time.sleep(60)
 
