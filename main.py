@@ -13,6 +13,10 @@ def main():
     for uid, subject, from_, body in messages:
         label = classifier.classify(subject, body)
         
+        if label is None:
+            print(f"Classification failed for email UID: {uid}. Skipping.")
+            continue
+        
         if label not in config.FOLDERS:
             continue
         

@@ -26,13 +26,17 @@ Anything regarding my active, already submitted application should be classified
 Subject: {subject}
 Body: {body[:500]}
 """
-        response = requests.post(
-            self.api_url,
-            json={"model": self.model, "prompt": prompt, "stream": False},
-            headers={"X-API-Key": f"{self.auth_key}"},
-            timeout=120,
-            stream=False
-        )
+        try:
+            response = requests.post(
+                self.api_url,
+                json={"model": self.model, "prompt": prompt, "stream": True},
+                headers={"X-API-Key": f"{self.auth_key}"},
+                timeout=120,
+                stream=True
+            )
+        except requests.RequestException as e:
+            print(f"Request failed: {e}")
+            return None
         
         output = ""
         if response.status_code == 200:
