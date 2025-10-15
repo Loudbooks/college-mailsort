@@ -29,10 +29,10 @@ Body: {body[:500]}
         try:
             response = requests.post(
                 self.api_url,
-                json={"model": self.model, "prompt": prompt, "stream": True},
+                json={"model": self.model, "prompt": prompt, "stream": False},
                 headers={"X-API-Key": f"{self.auth_key}"},
                 timeout=120,
-                stream=True
+                stream=False
             )
         except requests.RequestException as e:
             print(f"Request failed: {e}")
