@@ -23,6 +23,7 @@ def main():
         router.route(uid, label)
 
 if __name__ == "__main__":
+    print("Email service started. Checking for new emails every 60 seconds.")
     while True:
         main()
         time.sleep(60)
