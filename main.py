@@ -12,18 +12,21 @@ def main():
     print("Email service started. Checking for new emails every 60 seconds.")
     
     while True:
-        messages = imap_client.fetch_unseen()
-        for uid, subject, from_, body in messages:
-            label = classifier.classify(subject, body)
-            
-            if label is None:
-                print(f"Classification failed for email UID: {uid}. Skipping.")
-                continue
-            
-            if label not in config.FOLDERS:
-                continue
-            
-            router.route(uid, label)
+        try:
+            messages = imap_client.fetch_unseen()
+            for uid, subject, from_, body in messages:
+                label = classifier.classify(subject, body)
+                
+                if label is None:
+                    print(f"Classification failed for email UID: {uid}. Skipping.")
+                    continue
+                
+                if label not in config.FOLDERS:
+                    continue
+                
+                router.route(uid, label)
+        except Exception as e:
+            print(f"An error occurred: {e}")
         
         time.sleep(60)
 
