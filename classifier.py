@@ -1,11 +1,10 @@
-import requests
+from openrouter import OpenRouter
 import config
 
 class Classifier:
     def __init__(self):
-        self.api_url = config.OLLAMA_API
+        self.api_url = config.OPENROUTER_KEY
         self.model = config.MODEL
-        self.auth_key = config.AUTHENTICATION_KEY
 
     def classify(self, subject, body):
         prompt = f"""
@@ -22,28 +21,23 @@ Only respond with one of those two categories and nothing else.
 When I say college I mean universities, colleges, community colleges, trade schools, and other post-secondary educational institutions. 
 Results for an application to that college should be classified as Anything Else. 
 Anything regarding my active, already submitted application should be classified as Anything Else.
+Anything from Case Western Reserve University should be classified as Anything Else.
 
 Subject: {subject}
 Body: {body[:500]}
 """
-        try:
-            response = requests.post(
-                self.api_url,
-                json={"model": self.model, "prompt": prompt, "stream": False},
-                headers={"X-API-Key": f"{self.auth_key}"},
-                timeout=320,
-                stream=False
+
+        with OpenRouter(
+            api_key=config.OPENROUTER_KEY
+        ) as client:
+            response = client.chat.send(
+                model=config.MODEL,
+                messages=[
+                    {"role": "user", "content": prompt}
+                ]
             )
-        except requests.RequestException as e:
-            print(f"Request failed: {e}")
-            return None
-        
-        output = ""
-        if response.status_code == 200:
-            output = response.json().get("response", "")
-            import re
-            output = re.sub(r"<think>.*?</think>", "", output, flags=re.DOTALL).strip()
-        else:
-            output = "Anything Else"
+            
+        output = response.choices[0].message.content.strip()
+        print(f"Classifier output for email UID {subject}: {output}")
         
         return output
