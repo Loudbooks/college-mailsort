@@ -31,7 +31,7 @@ Body: {body[:500]}
                 self.api_url,
                 json={"model": self.model, "prompt": prompt, "stream": False},
                 headers={"X-API-Key": f"{self.auth_key}"},
-                timeout=120,
+                timeout=320,
                 stream=False
             )
         except requests.RequestException as e:
