@@ -1,4 +1,6 @@
 venv
+.venv
 pyvenv.cfg
 __pycache__/
 .env
+.python-version
