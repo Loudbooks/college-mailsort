@@ -21,8 +21,7 @@ Do not use any punctuation.
 Do not use any other words.
 Only respond with one of those two categories and nothing else.
 When I say college I mean universities, colleges, community colleges, trade schools, and other post-secondary educational institutions.
-Results for an application to that college should be classified as Anything Else.
-Anything regarding my active, already submitted application should be classified as Anything Else.
+If the intention is to get me to apply to, attend, or engage with such an institution, classify it as College Advertising.
 Anything from Case Western Reserve University should be classified as Anything Else.
 
 Subject: {subject}
