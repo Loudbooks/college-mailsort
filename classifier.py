@@ -43,4 +43,6 @@ Body: {body[:500]}
             except Exception as e:
                 if attempt == 2:
                     raise
+                
+                print(f"Error during classification attempt {attempt + 1}: {e}. Retrying...")
                 time.sleep(2 ** attempt)
