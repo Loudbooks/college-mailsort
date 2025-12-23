@@ -7,7 +7,7 @@ class Classifier:
     def __init__(self):
         self.model = config.MODEL
 
-    def classify(self, subject: str, body: str) -> str:
+    def classify(self, subject: str, body: str, sender: str) -> str:
         self.client = OpenRouter(api_key=config.OPENROUTER_KEY)
         
         prompt = f"""
@@ -24,7 +24,9 @@ Only respond with one of those two categories and nothing else.
 When I say college I mean universities, colleges, community colleges, trade schools, and other post-secondary educational institutions.
 If the intention is to get me to apply to, attend, or engage with such an institution, classify it as College Advertising.
 Anything from Case Western Reserve University should be classified as Anything Else.
+If the sender is from a university or college's admissions or marketing department, classify it as College Advertising.
 
+Sender: {sender}
 Subject: {subject}
 Body: {body[:500]}
 """.strip()

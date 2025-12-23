@@ -17,8 +17,8 @@ def main():
             messages = imap_client.fetch_unseen()
             if not messages:
                 print("No new unseen emails found.")
-            for uid, subject, from_, body in messages:
-                label = classifier.classify(subject, body)
+            for uid, subject, sender, body in messages:
+                label = classifier.classify(subject, body, sender)
                 
                 if label is None:
                     print(f"Classification failed for email UID: {uid}. Skipping.")
