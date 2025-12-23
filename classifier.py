@@ -6,9 +6,10 @@ import time
 class Classifier:
     def __init__(self):
         self.model = config.MODEL
-        self.client = OpenRouter(api_key=config.OPENROUTER_KEY)
 
     def classify(self, subject: str, body: str) -> str:
+        self.client = OpenRouter(api_key=config.OPENROUTER_KEY)
+        
         prompt = f"""
 Classify this email into either College Advertising or Anything Else.
 Only respond with one of those two categories and nothing else.
