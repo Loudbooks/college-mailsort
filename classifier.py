@@ -1,15 +1,16 @@
-from openrouter import OpenRouter
+from openai import OpenAI
 import config
 import time
-
 
 class Classifier:
     def __init__(self):
         self.model = config.MODEL
+        self.client = OpenAI(
+            base_url="https://openrouter.ai/api/v1",
+            api_key=config.OPENROUTER_KEY
+        )
 
     def classify(self, subject: str, body: str, sender: str) -> str:
-        self.client = OpenRouter(api_key=config.OPENROUTER_KEY)
-        
         prompt = f"""
 Classify this email into either College Advertising or Anything Else.
 Only respond with one of those two categories and nothing else.
@@ -28,12 +29,12 @@ If the sender is from a university or college's admissions or marketing departme
 
 Sender: {sender}
 Subject: {subject}
-Body: {body[:500]}
+Body: {body[:2000]}
 """.strip()
 
         for attempt in range(3):
             try:
-                response = self.client.chat.send(
+                response = self.client.chat.completions.create(
                     model=self.model,
                     messages=[{"role": "user", "content": prompt}]
                 )

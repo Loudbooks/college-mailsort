@@ -4,12 +4,14 @@ from router import Router
 import config
 import time
 
+TIMEOUT = 30
+
 def main():
     imap_client = IMAPClient(config.IMAP_HOST, config.IMAP_USER, config.IMAP_PASS)
     classifier = Classifier()
     router = Router(imap_client)
     
-    print("Email service started. Checking for new emails every 60 seconds.")
+    print(f"Email service started. Checking for new emails every {TIMEOUT} seconds.")
     
     while True:
         try:
@@ -31,7 +33,7 @@ def main():
         except Exception as e:
             print(f"An error occurred: {e}")
         
-        time.sleep(30)
+        time.sleep(TIMEOUT)
 
 if __name__ == "__main__":
     main()
