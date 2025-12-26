@@ -48,4 +48,10 @@ Body: {body[:2000]}
                     raise
                 
                 print(f"Error during classification attempt {attempt + 1}: {e}. Retrying...")
+                
+                self.client = OpenAI(
+                    base_url="https://openrouter.ai/api/v1",
+                    api_key=config.OPENROUTER_KEY
+                )
+
                 time.sleep(2 ** attempt)
